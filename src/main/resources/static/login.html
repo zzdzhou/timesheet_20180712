@@ -6,23 +6,41 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
+    <style>
+        .container {margin-top: 150px}
+        .col-lg-4 {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10px;
+        }
+    </style>
     <title>Login</title>
 </head>
 <body>
 
 <div class="container">
-    <div class="row">
-        <div class="col-md-5"></div>
-        <div class="col-md-2">
-                <form>
-                    <input type="text" >
-                    <input>
-                    <
-                </form>
+    <form>
+        <div class="row">
+            <div class="col-lg-4">
+                <input type="text" class="form-control" name="username" placeholder="Username">
+            </div>
         </div>
-        <div class="col-md-5"></div>
-    </div>
-
+        <div class="row">
+            <div class="col-lg-4">
+                <input type="password" class="form-control" name="password" placeholder="Password">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <input type="submit" class="form-control" value="Sign in">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <input type="submit" class="form-control" value="Sign up"/>
+            </div>
+        </div>
+    </form>
 </div>
 
 </body>
