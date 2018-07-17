@@ -24,8 +24,8 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String index() {
-        return UrlBasedViewResolver.REDIRECT_URL_PREFIX + "/login.html";
+    public String login() {
+        return "login";
     }
 
     @PostMapping("/signup")
@@ -35,11 +35,14 @@ public class UserController {
     }
 
     @PostMapping("/authentication")
-    public String login(User user, Model model) {
+    public String authenticate(User user, Model model) {
         Optional<User> userOpt = userService.authenticateAnUser(user.getUsername(), user.getPassword());
         if (userOpt.isPresent()) {
             model.addAttribute("username", user.getUsername());
+            model.addAttribute("tickets", userOpt.get().getTickets());
+            return "timesheet";
         }
-        return "timesheet";
+        model.addAttribute("error", "Invalid username or password");
+        return "login";
     }
 }
