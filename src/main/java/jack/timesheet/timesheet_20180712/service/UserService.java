@@ -5,6 +5,7 @@ import jack.timesheet.timesheet_20180712.entities.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import static org.apache.commons.lang3.StringUtils.isEmpty;
 
 import java.util.Optional;
 
@@ -18,7 +19,7 @@ public class UserService {
     }
 
     public User createAnUser(User user) throws Exception {
-        if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
+        if (isEmpty(user.getUsername()) || isEmpty(user.getPassword()) || isEmpty(user.getFullName())) {
             throw new Exception("Empty username or password is not allowed");
         }
         return userRepo.save(user);
@@ -32,5 +33,9 @@ public class UserService {
             }
         }
         return Optional.empty();
+    }
+
+    public Iterable<User> getAllTicketsOfAnUser(String username) {
+        return userRepo.findAllByUsername(username);
     }
 }

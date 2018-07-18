@@ -28,9 +28,15 @@ public class UserController {
         return "login";
     }
 
-    @PostMapping("/signup")
+    @GetMapping("/signUpPage")
+    public String signUp() {
+        return "signUp";
+    }
+
+    @PostMapping("/signUp")
     public String signUp(User user) throws Exception {
         userService.createAnUser(user);
+        // todo
         return "timesheet";
     }
 
