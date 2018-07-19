@@ -1,12 +1,14 @@
 package jack.timesheet.timesheet_20180712.service;
 
 import jack.timesheet.timesheet_20180712.dao.UserRepo;
+import jack.timesheet.timesheet_20180712.entities.Ticket;
 import jack.timesheet.timesheet_20180712.entities.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,7 +37,7 @@ public class UserService {
         return Optional.empty();
     }
 
-    public Iterable<User> getAllTicketsOfAnUser(String username) {
-        return userRepo.findAllByUsername(username);
+    public Optional<List<Ticket>> getAllTicketsOfAnUser(Integer userId) {
+        return userRepo.findById(userId).flatMap(User::getTickets);
     }
 }

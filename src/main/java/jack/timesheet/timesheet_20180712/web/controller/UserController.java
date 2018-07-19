@@ -45,6 +45,7 @@ public class UserController {
     public String authenticate(User user, Model model) {
         Optional<User> userOpt = userService.authenticateAnUser(user.getUsername(), user.getPassword());
         if (userOpt.isPresent()) {
+            model.addAttribute("userId", userOpt.get().getId());
             model.addAttribute("username", user.getUsername());
             model.addAttribute("tickets", userOpt.get().getTickets());
             return "timesheet";
