@@ -1,8 +1,5 @@
 package jack.timesheet.timesheet_20180712.web.controller;
 
-import ch.qos.logback.core.joran.conditional.IfAction;
-import com.sun.xml.internal.ws.resources.HttpserverMessages;
-import jack.timesheet.timesheet_20180712.dao.UserRepo;
 import jack.timesheet.timesheet_20180712.entities.Ticket;
 import jack.timesheet.timesheet_20180712.entities.User;
 import jack.timesheet.timesheet_20180712.service.TicketService;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
 import java.util.List;
