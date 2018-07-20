@@ -13,25 +13,34 @@
             margin-right: auto;
             margin-top: 10px;
         }
-        p {}
+        p {
+            color: red;}
     </style>
     <title>Login</title>
 </head>
 <body>
 
 <div class="container">
-    <p th:unless="${error} == null">${error}</p>
+
     <form action="./authentication" method="post">
+        <div class="row">
+            <div class="col-lg-4">
+                <p th:unless="${error} == null">Invalid username or password!</p>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-lg-4">
                 <input type="text" class="form-control" name="username" placeholder="Username">
             </div>
         </div>
+
         <div class="row">
             <div class="col-lg-4">
                 <input type="password" class="form-control" name="password" placeholder="Password">
             </div>
         </div>
+
         <div class="row">
             <div class="col-lg-4">
                 <input type="submit" class="form-control" value="Sign in">
@@ -41,7 +50,7 @@
 
     <div class="row">
         <div class="col-lg-4">
-            <button type="submit" class="form-control" onclick="location.href='./signUpPage'">Sign up</button>
+            <button type="submit" class="form-control" onclick="location.href='./signUp'">Sign up</button>
         </div>
     </div>
 

@@ -16,6 +16,6 @@ public class TicketService {
     }
 
     public void addATicket(Ticket ticket) {
-        Ticket tick = ticketRepo.save(ticket);
+        ticketRepo.save(ticket);
     }
 }

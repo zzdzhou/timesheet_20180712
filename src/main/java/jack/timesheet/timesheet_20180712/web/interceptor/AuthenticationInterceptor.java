@@ -13,7 +13,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Integer userId = (Integer) request.getSession().getAttribute("userId");
         if (userId == null) {
-            response.sendRedirect("/user/login");
+            response.sendRedirect("/timesheet/user/login"); // should be /timesheet/user/login
             return false;
         }
         return true;

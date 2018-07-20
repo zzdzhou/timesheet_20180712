@@ -29,7 +29,7 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/signUpPage")
+    @GetMapping("/signUp")
     public String signUp() {
         return "signUp";
     }
@@ -38,7 +38,7 @@ public class UserController {
     public String signUp(User user) throws Exception {
         userService.createAnUser(user);
         // todo
-        return "timesheet";
+        return "login";
     }
 
     @PostMapping("/authentication")

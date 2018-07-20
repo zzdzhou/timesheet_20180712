@@ -22,7 +22,7 @@ public class UserService {
 
     public User createAnUser(User user) throws Exception {
         if (isEmpty(user.getUsername()) || isEmpty(user.getPassword()) || isEmpty(user.getFullName())) {
-            throw new Exception("Empty username or password is not allowed");
+            throw new Exception("Username, fullname, password can't be empty!");
         }
         return userRepo.save(user);
     }
@@ -38,6 +38,14 @@ public class UserService {
     }
 
     public Optional<List<Ticket>> getAllTicketsOfAnUser(Integer userId) {
-        return userRepo.findById(userId).flatMap(User::getTickets);
+        return userRepo.findById(userId).map(User::getTickets);
+    }
+
+    public Optional<String> getFullNameById(Integer userId) {
+        return userRepo.findById(userId).map(User::getFullName);
+    }
+
+    public Optional<User> getUserById(Integer userId) {
+        return userRepo.findById(userId);
     }
 }
