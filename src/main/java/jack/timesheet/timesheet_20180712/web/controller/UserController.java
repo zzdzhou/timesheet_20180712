@@ -2,15 +2,14 @@ package jack.timesheet.timesheet_20180712.web.controller;
 
 import jack.timesheet.timesheet_20180712.entities.User;
 import jack.timesheet.timesheet_20180712.service.UserService;
+import jdk.nashorn.internal.ir.IfNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.handler.AbstractHandlerMapping;
-import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
@@ -25,7 +24,13 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(@RequestParam(required = false) String msg, @RequestParam(required = false) String error, Model model) {
+        if (msg != null) {
+            model.addAttribute("msg", msg);
+        }
+        if (error != null) {
+            model.addAttribute("error", error);
+        }
         return "login";
     }
 
@@ -35,10 +40,11 @@ public class UserController {
     }
 
     @PostMapping("/signUp")
-    public String signUp(User user) throws Exception {
+    public String signUp(User user, Model model) throws Exception {
         userService.createAnUser(user);
         // todo
-        return "login";
+        model.addAttribute("msg", "You have registered an account successfully! Please login");
+        return "redirect:/user/login";
     }
 
     @PostMapping("/authentication")
@@ -51,6 +57,6 @@ public class UserController {
             return "timesheet";
         }
         model.addAttribute("error", "Invalid username or password");
-        return "login";
+        return "redirect:/user/login";
     }
 }

@@ -13,8 +13,12 @@
             margin-right: auto;
             margin-top: 10px;
         }
-        p {
-            color: red;}
+        .warn {
+            color: red;
+        }
+        .info {
+            color: green;
+        }
     </style>
     <title>Login</title>
 </head>
@@ -25,7 +29,8 @@
     <form action="/timesheet/user/authentication" method="post">
         <div class="row">
             <div class="col-lg-4">
-                <p th:unless="${error} == null">Invalid username or password!</p>
+                <p th:unless="${error} == null" th:text="${error}" class="warn"></p>
+                <p th:unless="${msg} == null" th:text="${msg}" class="info"></p>
             </div>
         </div>
 
