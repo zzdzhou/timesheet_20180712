@@ -22,7 +22,7 @@
 
 <div class="container">
 
-    <form action="./authentication" method="post">
+    <form action="/timesheet/user/authentication" method="post">
         <div class="row">
             <div class="col-lg-4">
                 <p th:unless="${error} == null">Invalid username or password!</p>
@@ -50,7 +50,7 @@
 
     <div class="row">
         <div class="col-lg-4">
-            <button type="submit" class="form-control" onclick="location.href='./signUp'">Sign up</button>
+            <button type="submit" class="form-control" onclick="location.href='/timesheet/user/signUp'">Sign up</button>
         </div>
     </div>
 
