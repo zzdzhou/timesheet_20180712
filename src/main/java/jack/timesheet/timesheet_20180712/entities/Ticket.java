@@ -1,5 +1,7 @@
 package jack.timesheet.timesheet_20180712.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.sql.Date;
 
@@ -23,6 +25,7 @@ public class Ticket {
 
     private String description;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

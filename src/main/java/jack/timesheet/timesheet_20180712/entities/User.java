@@ -1,5 +1,7 @@
 package jack.timesheet.timesheet_20180712.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private List<Ticket> tickets;
 
     public User() {

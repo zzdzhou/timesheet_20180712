@@ -46,7 +46,7 @@ public class TicketController {
         if (ticketsOpt.isPresent()) {
             model.addAttribute("tickets", ticketsOpt.get());
         }
-        return "timesheet";
+        return "timesheet_v2";
     }
 
     @PostMapping("/add/secure")

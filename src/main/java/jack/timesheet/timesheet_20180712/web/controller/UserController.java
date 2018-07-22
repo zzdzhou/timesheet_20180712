@@ -54,7 +54,7 @@ public class UserController {
             model.addAttribute("userId", userOpt.get().getId());
             model.addAttribute("username", user.getUsername());
             model.addAttribute("tickets", userOpt.get().getTickets());
-            return "timesheet";
+            return "timesheet_v2";
         }
         model.addAttribute("error", "Invalid username or password");
         return "redirect:/user/login";
