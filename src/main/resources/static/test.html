@@ -1,188 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>CRUD Table</title>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <!-- 引入 Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <!-- 引入 Bootstrap-table CSS -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
-    <link rel="stylesheet" href="../assets/examples.css">
-    <style>
-        .update {
-            color: #333;
-            margin-right: 5px;
-        }
-        .remove {
-            color: red;
-            margin-left: 5px;
-        }
-        .alert {
-            padding: 0 14px;
-            margin-bottom: 0;
-            display: inline-block;
-        }
-    </style>
-    <!-- Bootstrap js -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
-            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
-            crossorigin="anonymous"></script>
-    <!-- Bootstrap-table js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
-    <script src="../ga.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+
+    <title>Title</title>
 </head>
 <body>
-<div class="container">
-    <h1>CRUD Table</h1>
-    <p class="toolbar">
-        <a class="create btn btn-default" href="javascript:">Create Item</a>
-        <span class="alert"></span>
-    </p>
-    <table id="table"
-           data-show-refresh="true"
-           data-show-columns="true"
-           data-search="true"
-           data-query-params="queryParams"
-           data-toolbar=".toolbar">
-        <thead>
-        <tr>
-            <th data-field="name">Name</th>
-            <th data-field="stargazers_count">Stars</th>
-            <th data-field="forks_count">Forks</th>
-            <th data-field="description">Description</th>
-            <th data-field="action"
-                data-align="center"
-                data-formatter="actionFormatter"
-                data-events="actionEvents">Action</th>
-        </tr>
-        </thead>
-    </table>
+<div class="container" style="margin-top: 100px">
+    <table id="table"></table>
+
+
 </div>
 
-<div id="modal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"></h4>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" class="form-control" name="name" placeholder="Name">
-                </div>
-                <div class="form-group">
-                    <label>Stars</label>
-                    <input type="number" class="form-control" name="stargazers_count" placeholder="Stars">
-                </div>
-                <div class="form-group">
-                    <label>Forks</label>
-                    <input type="number" class="form-control" name="forks_count" placeholder="Forks">
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <input type="text" class="form-control" name="description" placeholder="Description">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary submit">Submit</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+
+
+<!-- Bootstrap js -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+        integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+        crossorigin="anonymous"></script>
+<!-- Bootstrap-table js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
+<!-- my js -->
+<!--<script src="/timesheet/js/timesheet.js"></script>-->
+
 <script>
-    var API_URL = 'http://' + location.host + ':3001/list/';
-    var $table = $('#table').bootstrapTable({url: API_URL}),
-        $modal = $('#modal').modal({show: false}),
-        $alert = $('.alert').hide();
-    $(function () {
-        // create event
-        $('.create').click(function () {
-            showModal($(this).text());
+    /*$(document).ready(function () {
+        $('table').bootstrapTable({
+            url:"http://localhost:8000/timesheet/rest/ticket/all"
         });
-        $modal.find('.submit').click(function () {
-            var row = {};
-            $modal.find('input[name]').each(function () {
-                row[$(this).attr('name')] = $(this).val();
-            });
-            $.ajax({
-                url: API_URL + ($modal.data('id') || ''),
-                type: $modal.data('id') ? 'put' : 'post',
-                contentType: 'application/json',
-                data: JSON.stringify(row),
-                success: function () {
-                    $modal.modal('hide');
-                    $table.bootstrapTable('refresh');
-                    showAlert(($modal.data('id') ? 'Update' : 'Create') + ' item successful!', 'success');
-                },
-                error: function () {
-                    $modal.modal('hide');
-                    showAlert(($modal.data('id') ? 'Update' : 'Create') + ' item error!', 'danger');
-                }
-            });
-        });
+    })*/
+    $('#table').bootstrapTable({
+        columns: [{
+            field: 'id',
+            title: 'Item ID'
+        }, {
+            field: 'name',
+            title: 'Item Name'
+        }, {
+            field: 'price',
+            title: 'Item Price'
+        }],
+
+        data: [{
+            id: 1,
+            name: 'Item 1',
+            price: '$1'
+        }, {
+            id: 2,
+            name: 'Item 2',
+            price: '$2'
+        }]
     });
-    function queryParams(params) {
-        return {};
-    }
-    function actionFormatter(value) {
-        return [
-            '<a class="update" href="javascript:" title="Update Item"><i class="glyphicon glyphicon-edit"></i></a>',
-            '<a class="remove" href="javascript:" title="Delete Item"><i class="glyphicon glyphicon-remove-circle"></i></a>',
-        ].join('');
-    }
-    // update and delete events
-    window.actionEvents = {
-        'click .update': function (e, value, row) {
-            showModal($(this).attr('title'), row);
-        },
-        'click .remove': function (e, value, row) {
-            if (confirm('Are you sure to delete this item?')) {
-                $.ajax({
-                    url: API_URL + row.id,
-                    type: 'delete',
-                    success: function () {
-                        $table.bootstrapTable('refresh');
-                        showAlert('Delete item successful!', 'success');
-                    },
-                    error: function () {
-                        showAlert('Delete item error!', 'danger');
-                    }
-                })
-            }
-        }
-    };
-    function showModal(title, row) {
-        row = row || {
-            id: '',
-            name: '',
-            stargazers_count: 0,
-            forks_count: 0,
-            description: ''
-        }; // default row value
-        $modal.data('id', row.id);
-        $modal.find('.modal-title').text(title);
-        for (var name in row) {
-            $modal.find('input[name="' + name + '"]').val(row[name]);
-        }
-        $modal.modal('show');
-    }
-    function showAlert(title, type) {
-        $alert.attr('class', 'alert alert-' + type || 'success')
-            .html('<i class="glyphicon glyphicon-check"></i> ' + title).show();
-        setTimeout(function () {
-            $alert.hide();
-        }, 3000);
-    }
 </script>
 </body>
 </html>

@@ -10,59 +10,34 @@
     <!-- 引入 Bootstrap-table CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
 
-    <title>Title</title>
+    <title>Timesheet</title>
 </head>
 <body>
 <div class="container" style="margin-top: 100px">
-    <table class="table" data-toggle="table" data-url="http://localhost:8000/timesheet/rest/ticket/all" data-method="get"
-           data-classes="table table-hover table-no-bordered"
-           data-striped=true>
+
+    <table id="table">
         <thead class="thead-dark">
-            <tr>
-                <th data-field="date">Date</th>
-                <th data-field="activity">Activity</th>
-                <th data-field="type">Type</th>
-                <th data-field="resource">Resource</th>
-                <th data-field="days">Days</th>
-                <th data-field="description">Description</th>
-            </tr>
+        <tr>
+            <th data-field="date">Date</th>
+            <th data-field="activity">Activity</th>
+            <th data-field="type">Type</th>
+            <th data-field="resource">Resource</th>
+            <th data-field="days">Days</th>
+            <th data-field="description">Description</th>
+        </tr>
         </thead>
-        <!--<tbody class="table-striped "></tbody>-->
     </table>
-
-
- <!--   <div id="toolbar">
-        <button id="remove" class="btn btn-danger" disabled>
-            <i class="glyphicon glyphicon-remove"></i> Delete
-        </button>
-    </div>
-    <table id="table"
-           data-toolbar="#toolbar"
-           data-search="true"
-           data-show-refresh="true"
-           data-show-toggle="true"
-           data-show-columns="true"
-           data-show-export="true"
-           data-detail-view="true"
-           data-detail-formatter="detailFormatter"
-           data-minimum-count-columns="2"
-           data-show-pagination-switch="true"
-           data-pagination="true"
-           data-id-field="id"
-           data-page-list="[10, 25, 50, 100, ALL]"
-           data-side-pagination="server"
-           data-url="http://issues.wenzhixin.net.cn/examples/bootstrap_table/data"
-           data-response-handler="responseHandler">
-    </table>-->
 
 </div>
 
 
+<!-- jQuery -->
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 
 <!-- Bootstrap js -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
@@ -72,15 +47,37 @@
 <!-- Bootstrap-table js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>
-<!-- my js -->
-<!--<script src="/timesheet/js/timesheet.js"></script>-->
+
 
 <script>
-    $(document).ready(function () {
-        $('table').bootstrapTable({
-            url:"http://localhost:8000/timesheet/rest/ticket/all"
+
+    /*$.ajax({
+        type: "GET",
+        url: "http://localhost:8000/timesheet/rest/ticket/all",
+        dataType:"json",
+        success: function(json1) {
+            var data = json1.msg;
+            $('#table').bootstrapTable('load', data);
+        },
+        error: alert('error')
+    })*/
+
+    $(function () {
+
+        $("#table").bootstrapTable({
+            url: "http://localhost:8000/timesheet/rest/ticket/all",
+            method: "get",
+            dataType: "jsonp",
+
+            classes: "table table-hover table-no-bordered",
+            stripped: true
+
+
         });
-    })
+    });
+
+
+
 </script>
 </body>
 </html>
