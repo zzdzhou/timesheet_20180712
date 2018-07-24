@@ -11,6 +11,7 @@ public class Ticket {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @JsonBackReference
     private Integer id;
 
     private Date date;

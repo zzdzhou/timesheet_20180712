@@ -9,13 +9,15 @@
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <!-- 引入 Bootstrap-table CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+    <!-- Open iconic -->
+    <link rel="stylesheet" href="/timesheet/open-iconic-master/font/css/open-iconic-bootstrap.min.css">
 
     <title>Timesheet</title>
 </head>
 <body>
 <div class="container" style="margin-top: 100px">
 
-    <table id="table">
+    <table id="table" data-classes="table table-hover table-no-bordered" data-striped=true>
         <thead class="thead-dark">
         <tr>
             <th data-field="date">Date</th>
@@ -24,6 +26,7 @@
             <th data-field="resource">Resource</th>
             <th data-field="days">Days</th>
             <th data-field="description">Description</th>
+            <th data-field="action" data-align="center" data-formatter="operateFormatter">Action</th>
         </tr>
         </thead>
     </table>
@@ -32,12 +35,9 @@
 
 
 <!-- jQuery -->
-<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
 
 <!-- Bootstrap js -->
-<!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
@@ -50,33 +50,34 @@
 
 
 <script>
-
-    /*$.ajax({
-        type: "GET",
+    var $table = $("#table").bootstrapTable({
         url: "http://localhost:8000/timesheet/rest/ticket/all",
-        dataType:"json",
-        success: function(json1) {
-            var data = json1.msg;
-            $('#table').bootstrapTable('load', data);
-        },
-        error: alert('error')
-    })*/
+        method: "get",
+        dataType: "json",
 
+        pagination: true,
+        sidePagination: "server",
+        pageNumber: 1,
+        pageSize: 5
+    });
     $(function () {
 
-        $("#table").bootstrapTable({
-            url: "http://localhost:8000/timesheet/rest/ticket/all",
-            method: "get",
-            dataType: "jsonp",
-
-            classes: "table table-hover table-no-bordered",
-            stripped: true
-
-
-        });
     });
 
+    function operateFormatter() {
+        return [
+            '<a href="https://www.baidu.com"><span class="oi oi-pencil" title="update"></span></a>',
+            '<a onclick="deleteRow"><span class="oi oi-x" title="remove"></span></a>'
+        ].join('&nbsp;&nbsp;');
+    }
 
+    function deleteRow() {
+        $.ajax( {
+            url: "",
+            type: "DELETE"
+        });
+
+    }
 
 </script>
 </body>
