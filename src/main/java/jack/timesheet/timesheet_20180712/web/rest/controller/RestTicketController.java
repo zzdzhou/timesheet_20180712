@@ -11,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +42,7 @@ public class RestTicketController {
 
     @GetMapping("/all")
     public ResponseEntity<PaginationList> getTimesheet(@RequestParam(required = false, defaultValue = "0") int offset,
-                                                       @RequestParam(required = false, defaultValue = "10") int limit) {
+                                                       @RequestParam int limit) {
         Iterable<Ticket> allItr = ticketRepo.findAll();
         List<Ticket> tickets = new ArrayList<>();
         for (Ticket ticket : allItr) {
@@ -66,6 +63,12 @@ public class RestTicketController {
             tickets.add(ticket);
         }
         return tickets;
+    }
+
+    @DeleteMapping("/delete")
+    public Boolean deleteTicket(@RequestParam Integer ticketId) {
+        ticketRepo.deleteById(ticketId);
+        return true;
     }
 
 
