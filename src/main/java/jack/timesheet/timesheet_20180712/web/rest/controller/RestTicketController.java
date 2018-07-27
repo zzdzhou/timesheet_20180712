@@ -71,6 +71,18 @@ public class RestTicketController {
         return true;
     }
 
+    @PostMapping("/createOrUpdate")
+    public void createOrUpdateTicke(Ticket ticket) {
+        Integer id = ticket.getId();
+        if (id != null && id != 0) {
+            Optional<Ticket> ticketOpt = ticketRepo.findById(id);
+            if (ticketOpt.isPresent()) {
+                Ticket updateTicket = ticketOpt.get();
+                updateTicket.setUser(ticket.getUser());
+                updateTicket.setResource(ticket.getResource());
+            }
+        }
 
+    }
 
 }
