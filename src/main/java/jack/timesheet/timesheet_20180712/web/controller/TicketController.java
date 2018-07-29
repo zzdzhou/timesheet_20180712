@@ -1,5 +1,6 @@
 package jack.timesheet.timesheet_20180712.web.controller;
 
+import jack.timesheet.timesheet_20180712.dao.UserRepo;
 import jack.timesheet.timesheet_20180712.entities.Ticket;
 import jack.timesheet.timesheet_20180712.entities.User;
 import jack.timesheet.timesheet_20180712.service.TicketService;
@@ -29,7 +30,7 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    @GetMapping("/add/secure")
+    /*@GetMapping("/add/secure")
     public String addTicket(HttpSession session, Model model) {
         Integer userId = (Integer) session.getAttribute("userId");
         Optional<String> fullNameOpt = userService.getFullNameById(userId);
@@ -37,16 +38,18 @@ public class TicketController {
             model.addAttribute("fullName", fullNameOpt.get());
         }
         return "ticket";
-    }
+    }*/
 
-    @GetMapping("/secure")
-    public String ticket(HttpSession session, Model model) {
+    @GetMapping("/timesheet/secure")
+    public String ticket(HttpSession session, Model model) throws Exception {
         Integer userId = (Integer) session.getAttribute("userId");
-        Optional<List<Ticket>> ticketsOpt = userService.getAllTicketsOfAnUser(userId);
-        if (ticketsOpt.isPresent()) {
-            model.addAttribute("tickets", ticketsOpt.get());
+
+        Optional<String> fullNameOpt = userService.getFullNameById(userId);
+        if (fullNameOpt.isPresent()) {
+            model.addAttribute("fullname", fullNameOpt.get());
+            return "timesheet_v2";
         }
-        return "timesheet_v2";
+        throw new Exception("full name not exists");
     }
 
     @PostMapping("/add/secure")

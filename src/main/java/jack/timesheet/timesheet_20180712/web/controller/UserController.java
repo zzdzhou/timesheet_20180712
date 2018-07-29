@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
@@ -48,13 +49,12 @@ public class UserController {
     }
 
     @PostMapping("/authentication")
-    public String authenticate(User user, Model model) {
+    public String authenticate(HttpSession session, User user, Model model) {
         Optional<User> userOpt = userService.authenticateAnUser(user.getUsername(), user.getPassword());
         if (userOpt.isPresent()) {
-            model.addAttribute("userId", userOpt.get().getId());
-            model.addAttribute("username", user.getUsername());
-            model.addAttribute("tickets", userOpt.get().getTickets());
-            return "timesheet_v2";
+            // 第一次登录验证通过， 设置session userId
+            session.setAttribute("userId", userOpt.get().getId());
+            return "redirect:/ticket/timesheet/secure";
         }
         model.addAttribute("error", "Invalid username or password");
         return "redirect:/user/login";

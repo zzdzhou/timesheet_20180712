@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -9,35 +9,62 @@
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <!-- 引入 Bootstrap-table CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
-    <!-- Open iconic -->
-    <link rel="stylesheet" href="/timesheet/open-iconic-master/font/css/open-iconic-bootstrap.min.css">
+    <!--    &lt;!&ndash; Open iconic &ndash;&gt;
+        <link rel="stylesheet" href="/timesheet/open-iconic-master/font/css/open-iconic-bootstrap.min.css">-->
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+          integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <!-- local test-->
     <!--<link rel="stylesheet" href="/static/open-iconic-master/font/css/open-iconic-bootstrap.min.css">-->
 
     <!--<link rel="stylesheet" href="/timesheet/font-awesome-4.7.0/css/font-awesome.min.css">-->
 
-    <title>Timesheet24132</title>
+    <title>Timesheet</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-md navbar-dark bg-info">
+    <a class="navbar-brand my-0 my-md-0 py-0 py-md-0" href="#"><i class="fas fa-calendar-check"></i></a>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link active" href="">Timesheet</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="">Export</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="">Login</a>
+        </li>
+    </ul>
+</nav>
+
+
 <div class="container" style="margin-top: 100px">
 
     <div id="toolbar" class="btn-toolbar justify-content-between">
-        <div class="btn-group">
-            <button id="add-ticket" type="button" class="btn btn-outline-primary" title="Add a ticket">
-                <span class="oi oi-plus" aria-hidden="true">&nbsp;Add</span>
-            </button>
+        <div class="left-toolbar">
+            <div class="btn-group">
+                <button id="add-ticket" type="button" class="btn btn-outline-primary" title="Add a ticket">
+                    <span class="fas fa-plus" aria-hidden="true">&nbsp;Add</span>
+                </button>
+            </div>
+            <div class="btn-group">
+                <button id="export" type="button" class="btn btn-outline-primary" title="Export timesheet">
+                    <span class="fas fa-file-export" aria-hidden="true">&nbsp;Export</span>
+                </button>
+            </div>
         </div>
-        <div class="btn-group">
-            <button id="refresh-table" type="button" class="btn btn-outline-primary">
-                <span class="oi oi-reload" title="refresh" aria-hidden="true"></span>
-            </button>
+
+        <div class="right-toolbar">
+            <div class="btn-group">
+                <button id="refresh-table" type="button" class="btn btn-outline-primary">
+                    <span class="fas fa-sync-alt" title="refresh" aria-hidden="true"></span>
+                </button>
+            </div>
         </div>
     </div>
 
-
     <table id="table" data-classes="table table-hover table-no-bordered" data-striped=true style="margin-top: 10px;">
-        <thead class="thead-dark">
+        <thead class="text-white bg-dark">
         <tr>
             <th data-field="date">Date</th>
             <th data-field="activity">Activity</th>
@@ -77,9 +104,8 @@
                     <div class="form-group row justify-content-center">
                         <label for="type" class="col-md-3 col-form-label">Type</label>
                         <div class="col-md-9">
-                            <!--<input type="text" name="type" value="Support" readonly id="type" class="form-control">-->
                             <select id="type" class="form-control" name="type">
-                                <option selected>Support</option>
+                                <option value="Support">Support</option>
                             </select>
                         </div>
                     </div>
@@ -87,8 +113,7 @@
                     <div class="form-group row justify-content-center">
                         <label for="resource" class="col-md-3 col-form-label">Resource</label>
                         <div class="col-md-9">
-                            <input type="text" id="resource" name="resource" value="Your full name"
-                                   th:attr="value=${fullName}" readonly class="form-control"/>
+                            <input type="text" id="resource" name="resource" readonly class="form-control"/>
                         </div>
                     </div>
 
@@ -112,7 +137,7 @@
                         </div>
 
                         <div class="col-md-2.5 offset-md-1">
-                            <button type="button" class="btn btn-primary">Submit</button>
+                            <button id="submit" type="button" class="btn btn-primary">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -121,7 +146,6 @@
     </div>
 
 </div>
-
 
 <!-- jQuery -->
 <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
@@ -137,8 +161,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>-->
 
-
-<script>
+<script th:inline="javascript">
     var $table = $('#table');
     var $modal = $('#tiket-modal');
 
@@ -166,12 +189,24 @@
         $('#cancel').click(function () {
             $modal.modal('hide');
         })
+
+        $modal.find('#submit').click(function () {
+            var row = {};
+            row.id = $modal.data('id');
+            $modal.find("input[name]").each(function () {
+                row[$(this).attr('name')] = $(this).val();
+            });
+            $modal.find('select[name]').each(function () {
+                row[this.name] = this.value;
+            });
+            createOrUpdateTicket(row);
+        });
     });
 
     function operateFormatter() {
         return [
-            '<a class="update" href="javascript:" title="Update a ticket"><span class="oi oi-pencil"></span></a>',
-            '<a class="delete" href="javascript:" title="Remove a ticket"><span class="oi oi-x"></span></a>'
+            '<a class="update" href="javascript:" title="Update a ticket"><span class="fas fa-edit"></span></a>',
+            '<a class="delete" href="javascript:" title="Remove a ticket"><span class="fas fa-trash-alt"></span></a>'
         ].join('&nbsp;&nbsp;');
     }
 
@@ -205,42 +240,44 @@
     }
 
     function showModal(title, row) {
-        row = row || {
+        var defautRow = {
             "id": '',
             "date": '',
             "activity": '',
-            "type": "Support",
-            "resource": 'Your full name',
+            "type": 'Support',
+            // todo done
+            "resource": '',
             "days": '',
             "description": ''
         };
+        defautRow.resource = /*[[${fullname}]]*/'Your full name';
+        row = row || defautRow;
         $modal.find('.modal-title').text(title);
+        $modal.data("id", row.id);
+        // todo  'type' value
         for (var name in row) {
             $modal.find('input[name="' + name + '"]').val(row[name]);
+            $modal.find('select[name="' + name + '"]').val(row[name]);
         }
         $modal.modal('show');
     }
 
-    function createOrUpdateRow() {
+    function createOrUpdateTicket(row) {
 
         $.ajax({
             url: "/timesheet/rest/ticket/createOrUpdate",
             type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(row),
             dataType: "text",
-            data: {
-                id: '',
-                date: '',
-                activity: '',
-                type: '',
-                resource: '',
-                days: '',
-                description: ''
-            },
             success: function () {
-
+                $modal.modal('hide');
+                $table.bootstrapTable('refresh');
+                alert(($modal.data('id') ? "update" : "create") + " item successfully");
             },
             error: function () {
-
+                $modal.modal('hide');
+                alert(($modal.data('id') ? "update" : "create") + " item error");
             }
         });
     }

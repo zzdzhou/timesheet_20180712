@@ -72,17 +72,31 @@ public class RestTicketController {
     }
 
     @PostMapping("/createOrUpdate")
-    public void createOrUpdateTicke(Ticket ticket) {
+    public void createOrUpdateTicket(@RequestBody Ticket ticket) throws Exception {
+        Ticket newTicket = new Ticket();
+
         Integer id = ticket.getId();
-        if (id != null && id != 0) {
+        if (id != null) {
             Optional<Ticket> ticketOpt = ticketRepo.findById(id);
             if (ticketOpt.isPresent()) {
-                Ticket updateTicket = ticketOpt.get();
-                updateTicket.setUser(ticket.getUser());
-                updateTicket.setResource(ticket.getResource());
+                newTicket = ticketOpt.get();
             }
         }
 
+        newTicket.setDate(ticket.getDate());
+        newTicket.setActivity(ticket.getActivity());
+        newTicket.setType(ticket.getType());
+        newTicket.setResource(ticket.getResource());
+        newTicket.setDays(ticket.getDays());
+        newTicket.setDescription(ticket.getDescription());
+        Optional<User> userOpt = userRepo.findByFullName(ticket.getResource().trim());
+        if (userOpt.isPresent()) {
+            newTicket.setUser(userOpt.get());
+        } else {
+            throw new Exception(String.format("User fullname %s doesn't exists", ticket.getResource()));
+        }
+
+        ticketRepo.save(newTicket);
     }
 
 }

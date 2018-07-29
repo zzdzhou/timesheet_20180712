@@ -10,9 +10,9 @@ public interface UserRepo extends Repository<User, Integer> {
 
     User save(User user);
 
-//    Optional<User> findById(Integer id);
-
     Optional<User> findById(Integer id);
 
     Iterable<User> findAllByUsername(String username);
+
+    Optional<User> findByFullName(String fullname);
 }

@@ -13,15 +13,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 //@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
-    @Autowired
-    private LoginInterceptor loginInterceptor;
+/*    @Autowired
+    private LoginInterceptor loginInterceptor;*/
 
     @Autowired
     private AuthenticationInterceptor authenticationInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor).addPathPatterns("/**/user/authentication");
+//        registry.addInterceptor(loginInterceptor).addPathPatterns("/**/user/authentication");
         registry.addInterceptor(authenticationInterceptor).addPathPatterns("/**/secure");
     }
 
