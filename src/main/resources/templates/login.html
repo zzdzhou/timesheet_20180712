@@ -8,11 +8,6 @@
 
     <style>
         .container {margin-top: 150px}
-        .col-lg-4 {
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 10px;
-        }
         .warn {
             color: red;
         }
@@ -27,37 +22,39 @@
 <div class="container">
 
     <form action="/timesheet/user/authentication" method="post">
-        <div class="row">
-            <div class="col-lg-4">
+        <div id="msg" class="form-row justify-content-center">
+            <div class="col-md-4">
                 <p th:unless="${error} == null" th:text="${error}" class="warn"></p>
                 <p th:unless="${msg} == null" th:text="${msg}" class="info"></p>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <input type="text" class="form-control" name="username" placeholder="Username">
+        <div class="form-row justify-content-center mt-3">
+            <div class="form-group col-md-4">
+                <label for="username">Username</label>
+                <input id="username" class="form-control" type="text" name="username">
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <input type="password" class="form-control" name="password" placeholder="Password">
+        <div class="form-row justify-content-center">
+            <div class="form-group col-md-4">
+                <label for="password">Password</label>
+                <input id="password" class="form-control" type="password" name="password">
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-lg-4">
-                <input type="submit" class="form-control" value="Sign in">
+        <div class="form-row  justify-content-center">
+            <div class="col-md-4">
+                <input class="btn btn-primary form-control" type="submit" value="Sign in">
+            </div>
+        </div>
+
+        <div id="signup" class="form-row justify-content-center mt-3">
+            <div class="col-md-4">
+                <p class="text-center">New to Timesheet? <a href="/timesheet/user/signUp">Create an account.</a></p>
             </div>
         </div>
     </form>
-
-    <div class="row">
-        <div class="col-lg-4">
-            <button type="submit" class="form-control" onclick="location.href='/timesheet/user/signUp'">Sign up</button>
-        </div>
-    </div>
 
 </div>
 
