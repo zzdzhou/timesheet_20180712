@@ -23,9 +23,12 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md navbar-light bg-light">
+<nav class="navbar navbar-expand-md navbar-dark bg-info">
     <a class="navbar-brand" href="#"><i class="fas fa-calendar-check"></i></a>
-    <div class="collapse navbar-collapse">
+    <button class="navbar-toggler" type="button" data-toggler="collapse" data-target="#navbarText">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link active" href="">Timesheet</a>
@@ -35,11 +38,9 @@
             </li>
 
         </ul>
-        <form class="form-inline">
-            <button class="btn btn-secondary mr-lg-2 mr-md-2 mr-xl-2">Login</button>
-        </form>
+        <button class="btn btn-secondary">Login</button>
+        <!--<p class="navbar-text">Loign</p>-->
     </div>
-
 </nav>
 
 
