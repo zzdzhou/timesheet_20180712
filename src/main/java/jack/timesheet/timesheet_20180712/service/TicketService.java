@@ -45,27 +45,41 @@ public class TicketService {
             }
         }
 
-        if (fields.size() > 0) {
+        if (fields.size() > 0 && tickets != null && tickets.size() > 0) {
             XSSFWorkbook wb = new XSSFWorkbook();
             try (OutputStream os = new FileOutputStream(filename)) {
                 XSSFSheet sheet1 = wb.createSheet("sheet1");
                 // todo
                 Row row = null;
                 Cell cell = null;
+                Field field = null;
+                Ticket ticket = null;
                 // transfer each ticket in tickets to one row in excel
                 for (int r = 0; r < tickets.size(); r++) {
                     row = sheet1.createRow(r);
+                    ticket = tickets.get(r);
                     // tansfer each field in a ticket to a cell in excel
                     for (int c = 0; c < fields.size(); c++) {
                         cell = row.createCell(c);
+                        field = fields.get(c);
                         if (r == 0) {
-                            cell.setCellValue(fields.get(c).getName());
+                            cell.setCellValue(field.getName());
                         } else {
-                            cell.setCellValue(fields.get(c).);
+                            Class<?> type = field.getType();
+                            if (type == String.class) {
+                                cell.setCellValue((String) field.get(ticket));
+                            } else if (type == Integer.class) {
+                                cell.setCellValue(field.getInt(ticket));
+                            } else if (type == Float.class) {
+
+                            }
+
                         }
                     }
                 }
                 wb.write(os);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
             }
         }
 
