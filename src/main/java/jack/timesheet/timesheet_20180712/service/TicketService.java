@@ -35,22 +35,21 @@ public class TicketService {
         this.userRepo = userRepo;
     }
 
-    public void addATicket(Ticket ticket) {
-        ticketRepo.save(ticket);
+    public List<Ticket> getTickets(int userId) {
+        Optional<List<Ticket>> ticketsOpt = userRepo.findById(userId).map(User::getTickets);
+        if (ticketsOpt.isPresent()) {
+            return ticketsOpt.get();
+        }
+        return null;
     }
 
-    public void exportTikets(String fullname, int year, int month) throws IOException {
-        Iterable<Ticket> all = ticketRepo.findAll();
+    public List<Ticket> getAllTickets() {
+        Iterable<Ticket> allItr = ticketRepo.findAll();
         List<Ticket> tickets = new ArrayList<>();
-        for (Ticket item : all) {
-            tickets.add(item);
+        for (Ticket ticket : allItr) {
+            tickets.add(ticket);
         }
-
-        fullname = fullname.replace(" ", "_");
-        String filename = String.format(FILENAME_PATTERN, fullname, LocalDate.now().format(DateTimeFormatter.ofPattern("uuuu_MM")));
-        String[] excludeFields = {"id", "user"};
-
-        exportExcel(tickets, filename, excludeFields);
+        return tickets;
     }
 
     public PaginationList getTicketPaginationList(int offset, int limit) {
@@ -61,6 +60,10 @@ public class TicketService {
         }
         List<Ticket> pageList = tickets.stream().skip(offset).limit(limit).collect(Collectors.toList());
         return new PaginationList(tickets.size(), pageList);
+    }
+
+    public void addATicket(Ticket ticket) {
+        ticketRepo.save(ticket);
     }
 
     public void createOrUpdateTicket(Ticket ticket) throws Exception {
@@ -94,26 +97,26 @@ public class TicketService {
         ticketRepo.deleteById(ticketId);
     }
 
-    public List<Ticket> getAllTickets() {
-        Iterable<Ticket> allItr = ticketRepo.findAll();
+    public void exportTikets(String fullname, int year, int month) throws IOException {
+        Iterable<Ticket> all = ticketRepo.findAll();
         List<Ticket> tickets = new ArrayList<>();
-        for (Ticket ticket : allItr) {
-            tickets.add(ticket);
+        for (Ticket item : all) {
+            tickets.add(item);
         }
-        return tickets;
-    }
 
-    public List<Ticket> getTickets(int userId) {
-        Optional<List<Ticket>> ticketsOpt = userRepo.findById(userId).map(User::getTickets);
-        if (ticketsOpt.isPresent()) {
-            return ticketsOpt.get();
-        }
-        return null;
+        fullname = fullname.replace(" ", "_");
+        String filename = String.format(FILENAME_PATTERN, fullname, LocalDate.now().format(DateTimeFormatter.ofPattern("uuuu_MM")));
+        String[] excludeFields = {"id", "user"};
+
+        exportExcel(tickets, filename, excludeFields);
     }
 
     /*
-    tool methods
+     * tool methods
+     * -----------------------------
      */
+
+
     private void exportExcel (List<Ticket> tickets, String filename, String[] excludeFields) throws IOException {
 
         List<Field> fields = new ArrayList<>(Arrays.asList(Ticket.class.getDeclaredFields()));
