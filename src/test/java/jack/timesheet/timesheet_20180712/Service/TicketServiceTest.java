@@ -23,7 +23,7 @@ public class TicketServiceTest {
     @Test
     public void exportExcel() throws IOException {
         // initial parameters
-        ticketService.exportTikets("Rookie HAN");
+//        ticketService.exportTikets("Rookie HAN");
     }
 
 }

@@ -9,5 +9,5 @@ import java.util.List;
 
 public interface TicketRepo extends CrudRepository<Ticket, Integer> {
 
-    List<Ticket> findByUserAndDate(User user, Date date);
+    List<Ticket> findByUserAndDateBetween(User user, Date start, Date end);
 }
