@@ -5,24 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- 引入 Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
-          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link rel="stylesheet" href="/timesheet/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <!-- 引入 Bootstrap-table CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
-    <!--    &lt;!&ndash; Open iconic &ndash;&gt;
-        <link rel="stylesheet" href="/timesheet/open-iconic-master/font/css/open-iconic-bootstrap.min.css">-->
+    <link rel="stylesheet" href="/timesheet/node_modules/bootstrap-table/dist/bootstrap-table.min.css">
+    <!-- Bootstrap-daterangepicker -->
+    <link rel="stylesheet" href="/timesheet/node_modules/bootstrap-daterangepicker/daterangepicker.css">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
           integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-    <!-- local test-->
-    <!--<link rel="stylesheet" href="/static/open-iconic-master/font/css/open-iconic-bootstrap.min.css">-->
-
-    <!--<link rel="stylesheet" href="/timesheet/font-awesome-4.7.0/css/font-awesome.min.css">-->
-
     <title>Timesheet</title>
 </head>
 <body>
-
+<!-- navbar-->
 <nav class="navbar navbar-expand-md navbar-dark bg-info">
     <a class="navbar-brand" href="#"><i class="fas fa-calendar-check"></i></a>
     <button class="navbar-toggler" type="button" data-toggler="collapse" data-target="#navbarText">
@@ -43,31 +37,33 @@
     </div>
 </nav>
 
-
 <div class="container mt-5">
 
     <div id="toolbar" class="btn-toolbar justify-content-between">
-        <div class="left-toolbar">
+        <div class="btn-group">
             <div class="btn-group">
                 <button id="add-ticket" type="button" class="btn btn-outline-primary" title="Add a ticket">
                     <span class="fas fa-plus" aria-hidden="true">&nbsp;Add</span>
                 </button>
             </div>
-            <div class="btn-group">
+                <div class="btn-group">
                 <button id="export" type="button" class="btn btn-outline-primary" title="Export timesheet">
                     <span class="fas fa-file-export" aria-hidden="true">&nbsp;Export</span>
                 </button>
             </div>
-            <input type="month" name="month">
+            <div class="input-group">
+                <div class="input-group-append">
+                    <i class="fas fa-calendar"></i>
+                </div>
+                <input type="text" class="form-control border-primary" placeholder="Time range picker" id="date-range">
+            </div>
         </div>
-
 
         <div class="btn-group">
             <button id="refresh-table" type="button" class="btn btn-outline-primary">
                 <span class="fas fa-sync-alt" title="refresh" aria-hidden="true"></span>
             </button>
         </div>
-
     </div>
 
     <table id="table" data-classes="table table-hover table-no-bordered" data-striped=true style="margin-top: 10px;">
@@ -155,18 +151,17 @@
 </div>
 
 <!-- jQuery -->
-<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
-
+<script src="/timesheet/node_modules/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
-        integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
-        crossorigin="anonymous"></script>
+<script src="/timesheet/node_modules/bootstrap/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 <!-- Bootstrap-table js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+<script src="/timesheet/node_modules/bootstrap-table/dist/bootstrap-table.min.js"></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/locale/bootstrap-table-zh-CN.min.js"></script>-->
+<script src="/timesheet/node_modules/moment/moment.js"></script>
+<script src="/timesheet/node_modules/bootstrap-daterangepicker/daterangepicker.js"></script>
 
 <script th:inline="javascript">
     var $table = $('#table');
@@ -207,6 +202,13 @@
                 row[this.name] = this.value;
             });
             createOrUpdateTicket(row);
+        });
+
+        $("#date-range").daterangepicker({
+            singleDatePicker: false,
+            minDate: "2018-01-01",
+            showDropDowns: true
+
         });
     });
 
