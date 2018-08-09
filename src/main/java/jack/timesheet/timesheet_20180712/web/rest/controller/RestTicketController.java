@@ -31,19 +31,22 @@ public class RestTicketController {
         this.ticketService = ticketService;
     }
 
-    @GetMapping
+    /*@GetMapping
     public List<Ticket> getTimesheet(@RequestParam Integer userId) {
         return ticketService.getTickets(userId);
-    }
+    }*/
 
     @GetMapping("/all2")
     public List<Ticket> getTimesheet() {
         return ticketService.getAllTickets();
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<PaginationList> getTimesheet(@RequestParam(required = false, defaultValue = "0") int offset,
+    @GetMapping
+    public ResponseEntity<PaginationList> getTimesheet(@RequestParam(required = false) String fullName,
+                                                       @RequestParam(required = false) String dateRange,
+                                                       @RequestParam(required = false, defaultValue = "0") int offset,
                                                        @RequestParam int limit) {
+
         PaginationList paginationList = ticketService.getTicketPaginationList(offset, limit);
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.set("Access-Control-Allow-Headers", "application/json");
@@ -62,8 +65,9 @@ public class RestTicketController {
     }
 
     @GetMapping("/export")
-    public void exportTicketsByMonth(String fullname, int year, int month) throws IOException {
-        ticketService.exportTikets(fullname, year, month);
+    public void exportTickets(@RequestParam(required = false) String fullName,
+                              @RequestParam(required = false) String dateRange) throws IOException {
+//        ticketService.exportTikets(fullname, year, month);
     }
 
 }

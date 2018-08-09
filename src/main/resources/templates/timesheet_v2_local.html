@@ -49,9 +49,8 @@
 
 <div class="container mt-5">
 
-    <div id="toolbar" class="row">
-        <div class="col-lg-4">
-
+    <div id="toolbar" class="row justify-content-between">
+        <div class="col-md-3">
             <button id="add-ticket" type="button" class="btn btn-outline-primary mr-1" title="Add a ticket">
                 <span class="fas fa-plus" aria-hidden="true">&nbsp;Add</span>
             </button>
@@ -59,23 +58,24 @@
                 <span class="fas fa-file-export" aria-hidden="true">&nbsp;Export</span>
             </button>
         </div>
-        <div class="col-lg-5 input-group">
-            <div class="input-group mr-1" >
+        <div class="col-md-6 px-lg-1">
+            <div class="input-group">
+                <!--<div class="input-group">-->
+                    <input type="text" class="form-control border border-primary" placeholder="Pick time range" id="date-range">
+                    <!--<div class="input-group-append">
+                        <i class=" fas fa-calendar input-group-text"></i>
+                    </div>-->
+                <!--</div>-->
 
-                <input type="text" class="form-control border border-primary" placeholder="Pick time range" id="date-range">
-                <!--<i class=" fas fa-calendar "></i>-->
-
+                <select class="form-control border-primary">
+                    <option selected>Rookie HAN</option>
+                    <option>Jack ZHOU</option>
+                </select>
             </div>
-
-            <select class="form-control border-primary">
-                <option selected>Rookie HAN</option>
-                <option>Jack ZHOU</option>
-            </select>
-
         </div>
 
-        <div class="col-lg-1 offset-lg-11">
-            <button id="refresh-table" type="button" class="btn btn-outline-primary mr-0">
+        <div class="col-md-auto">
+            <button id="refresh-table" type="button" class="btn btn-outline-primary">
                 <span class="fas fa-sync-alt" title="refresh" aria-hidden="true"></span>
             </button>
         </div>

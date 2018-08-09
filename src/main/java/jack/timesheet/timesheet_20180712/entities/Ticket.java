@@ -1,12 +1,11 @@
 package jack.timesheet.timesheet_20180712.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.sql.Date;
 
-@Entity
+@Entity(name = "Ticket")
 @Table(name = "ticket")
 public class Ticket {
 

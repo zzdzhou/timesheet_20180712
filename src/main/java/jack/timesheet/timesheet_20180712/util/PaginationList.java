@@ -2,11 +2,11 @@ package jack.timesheet.timesheet_20180712.util;
 
 import java.util.List;
 
-public class PaginationList {
+public class PaginationList<T> {
 
     private int total;
 
-    private List rows;
+    private List<T> rows;
 
     public PaginationList(int total, List rows) {
         this.total = total;

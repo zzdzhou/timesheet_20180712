@@ -43,6 +43,20 @@ public class TicketService {
         return null;
     }
 
+    public List<Ticket> getTickets(String fullName, ) {
+
+    }
+
+    public PaginationList convertTicketsToPaginationList(List<Ticket> tickets, int offset, int limit) {
+        if (tickets != null) {
+            List<Ticket> pageList = tickets.stream().skip(offset).limit(limit).collect(Collectors.toList());
+            return new PaginationList(tickets.size(), pageList);
+        }
+        return new PaginationList(0, pageList);
+    }
+
+
+
     public List<Ticket> getAllTickets() {
         Iterable<Ticket> allItr = ticketRepo.findAll();
         List<Ticket> tickets = new ArrayList<>();
@@ -109,6 +123,10 @@ public class TicketService {
         String[] excludeFields = {"id", "user"};
 
         exportExcel(tickets, filename, excludeFields);
+    }
+
+    public List<String> getAllResources() {
+        return ticketRepo.findResouceDistinct();
     }
 
     /*

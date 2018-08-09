@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,8 +48,14 @@ public class TicketController {
         String fullName = (String) session.getAttribute("fullName");
 
         //Optional<String> fullNameOpt = userService.getFullNameById(userId);
-        Optional<List<Ticket>> ticketsOpt = userService.getUserById(userId).map(User::getTickets);
-        model.addAttribute("fullname", fullName);
+//        Optional<List<Ticket>> ticketsOpt = userService.getUserById(userId).map(User::getTickets);
+        model.addAttribute("userId", userId);
+        model.addAttribute("fullName", fullName);
+        model.addAttribute("resources", ticketService.getAllResources());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuu.MM.dd");
+        model.addAttribute("startDate", LocalDate.now().withDayOfMonth(1).format(formatter));
+        model.addAttribute("endDate", LocalDate.now().format(formatter));
         return "timesheet_v2";
 
 

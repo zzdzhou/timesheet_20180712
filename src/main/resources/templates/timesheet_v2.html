@@ -39,27 +39,32 @@
 
 <div class="container mt-5">
 
-    <div id="toolbar" class="btn-toolbar justify-content-between">
-        <div class="btn-group">
-            <div class="btn-group">
-                <button id="add-ticket" type="button" class="btn btn-outline-primary" title="Add a ticket">
-                    <span class="fas fa-plus" aria-hidden="true">&nbsp;Add</span>
-                </button>
-            </div>
-                <div class="btn-group">
-                <button id="export" type="button" class="btn btn-outline-primary" title="Export timesheet">
-                    <span class="fas fa-file-export" aria-hidden="true">&nbsp;Export</span>
-                </button>
-            </div>
+    <div id="toolbar" class="row justify-content-between">
+        <div class="col-md-3">
+            <button id="add-ticket" type="button" class="btn btn-outline-primary mr-1" title="Add a ticket">
+                <span class="fas fa-plus" aria-hidden="true">&nbsp;Add</span>
+            </button>
+            <button id="export" type="button" class="btn btn-outline-primary mr-1" title="Export timesheet">
+                <span class="fas fa-file-export" aria-hidden="true">&nbsp;Export</span>
+            </button>
+        </div>
+        <div class="col-md-6 px-lg-1">
             <div class="input-group">
-                <div class="input-group-append">
-                    <i class="fas fa-calendar"></i>
-                </div>
-                <input type="text" class="form-control border-primary" placeholder="Time range picker" id="date-range">
+                <input type="text" class="form-control border border-primary" placeholder="Pick time range" id="date-range">
+                <!--<div class="input-group-append">
+                    <i class=" fas fa-calendar input-group-addton"></i>
+                </div>-->
+
+                <select id="fullName" class="form-control border-primary">
+                    <option>All</option>
+                    <div th:each="item : ${resources}">
+                        <option th:text="${item}" th:selected="${fullName} == ${item}">NULL</option>
+                    </div>
+                </select>
             </div>
         </div>
 
-        <div class="btn-group">
+        <div class="col-md-auto">
             <button id="refresh-table" type="button" class="btn btn-outline-primary">
                 <span class="fas fa-sync-alt" title="refresh" aria-hidden="true"></span>
             </button>
@@ -172,6 +177,10 @@
             url: "/timesheet/rest/ticket/all",
             method: "get",
             dataType: "json",
+            queryParams: {
+                fullName: $("#fullName").text(),
+                dateRange: $("#date-range").val()
+            },
 
             pagination: true,
             sidePagination: "server",
@@ -204,11 +213,17 @@
             createOrUpdateTicket(row);
         });
 
+        var start = /*[[${startDate}]]*/ "2018.01.01";
+        var end = /*[[${endDate}]]*/ "2019.01.01";
         $("#date-range").daterangepicker({
             singleDatePicker: false,
-            minDate: "2018-01-01",
-            showDropDowns: true
-
+            startDate: start,
+            endDate: end,
+            minDate: "2018.01.01",
+            showDropDowns: true,
+            locale: {
+                format: "YYYY.MM.DD"
+            }
         });
     });
 
