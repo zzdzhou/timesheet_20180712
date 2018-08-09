@@ -43,13 +43,14 @@ public class TicketController {
     @GetMapping("/timesheet/secure")
     public String ticket(HttpSession session, Model model) throws Exception {
         Integer userId = (Integer) session.getAttribute("userId");
+        String fullName = (String) session.getAttribute("fullName");
 
-        Optional<String> fullNameOpt = userService.getFullNameById(userId);
-        if (fullNameOpt.isPresent()) {
-            model.addAttribute("fullname", fullNameOpt.get());
-            return "timesheet_v2";
-        }
-        throw new Exception("full name not exists");
+        //Optional<String> fullNameOpt = userService.getFullNameById(userId);
+        Optional<List<Ticket>> ticketsOpt = userService.getUserById(userId).map(User::getTickets);
+        model.addAttribute("fullname", fullName);
+        return "timesheet_v2";
+
+
     }
 
     @PostMapping("/add/secure")

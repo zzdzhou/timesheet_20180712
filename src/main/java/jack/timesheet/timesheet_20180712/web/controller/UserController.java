@@ -54,6 +54,7 @@ public class UserController {
         if (userOpt.isPresent()) {
             // 第一次登录验证通过， 设置session userId
             session.setAttribute("userId", userOpt.get().getId());
+            session.setAttribute("fullName", userOpt.get().getFullName());
             return "redirect:/ticket/timesheet/secure";
         }
         model.addAttribute("error", "Invalid username or password");
