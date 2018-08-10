@@ -47,12 +47,12 @@ public class TicketService {
 
     }
 
-    public PaginationList convertTicketsToPaginationList(List<Ticket> tickets, int offset, int limit) {
+    public PaginationList convertTicketsToPaginationList(List<Ticket> tickets, int offset, int limit) throws Exception {
         if (tickets != null) {
             List<Ticket> pageList = tickets.stream().skip(offset).limit(limit).collect(Collectors.toList());
             return new PaginationList(tickets.size(), pageList);
         }
-        return new PaginationList(0, pageList);
+        throw new Exception("tickets is null");
     }
 
 
