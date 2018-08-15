@@ -1,7 +1,6 @@
 package jack.timesheet.timesheet_20180712.Service;
 
 import jack.timesheet.timesheet_20180712.Timesheet20180712Application;
-import jack.timesheet.timesheet_20180712.dao.TicketRepo;
 import jack.timesheet.timesheet_20180712.service.TicketService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

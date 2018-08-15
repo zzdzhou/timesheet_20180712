@@ -2,7 +2,11 @@ package jack.timesheet.timesheet_20180712.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import javax.annotation.Generated;
 import javax.persistence.*;
+import javax.persistence.metamodel.ListAttribute;
+import javax.persistence.metamodel.SingularAttribute;
+import javax.persistence.metamodel.StaticMetamodel;
 import java.util.List;
 
 @Entity
@@ -77,5 +81,25 @@ public class User {
 
     public void setTickets(List<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
+    @StaticMetamodel(User.class)
+    public abstract static class User_ {
+
+        public static volatile SingularAttribute<User, String> password;
+        public static volatile ListAttribute<User, Ticket> tickets;
+        public static volatile SingularAttribute<User, String> fullName;
+        public static volatile SingularAttribute<User, Integer> id;
+        public static volatile SingularAttribute<User, String> email;
+        public static volatile SingularAttribute<User, String> username;
+
+        public static final String PASSWORD = "password";
+        public static final String TICKETS = "tickets";
+        public static final String FULL_NAME = "fullName";
+        public static final String ID = "id";
+        public static final String EMAIL = "email";
+        public static final String USERNAME = "username";
+
     }
 }

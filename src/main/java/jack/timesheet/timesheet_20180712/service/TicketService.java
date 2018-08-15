@@ -1,6 +1,6 @@
 package jack.timesheet.timesheet_20180712.service;
 
-import jack.timesheet.timesheet_20180712.dao.TicketRepo;
+import jack.timesheet.timesheet_20180712.dao.TicketRepository;
 import jack.timesheet.timesheet_20180712.dao.UserRepo;
 import jack.timesheet.timesheet_20180712.entities.Ticket;
 import jack.timesheet.timesheet_20180712.entities.User;
@@ -26,31 +26,31 @@ public class TicketService {
 
     public static final String FILENAME_PATTERN = "C:\\Users\\D1M\\Desktop\\zzd_tools\\TS Richemont_%1$s_%2$s.xlsx";
 
-    private TicketRepo ticketRepo;
+    private TicketRepository ticketRepo;
     private UserRepo userRepo;
 
     @Autowired
-    public TicketService(TicketRepo ticketRepo, UserRepo userRepo) {
+    public TicketService(TicketRepository ticketRepo, UserRepo userRepo) {
         this.ticketRepo = ticketRepo;
         this.userRepo = userRepo;
     }
 
-    public List<Ticket> getTickets(int userId) {
+ /*   public List<Ticket> getTickets(int userId) {
         Optional<List<Ticket>> ticketsOpt = userRepo.findById(userId).map(User::getTickets);
         if (ticketsOpt.isPresent()) {
             return ticketsOpt.get();
         }
         return null;
     }
-
-    public List<Ticket> getTickets(String fullName, ) {
-
+*/
+    public List<Ticket> getTickets(String fullName, String dateRange) throws Exception {
+        return ticketRepo.getTickets(fullName, dateRange);
     }
 
     public PaginationList convertTicketsToPaginationList(List<Ticket> tickets, int offset, int limit) throws Exception {
         if (tickets != null) {
             List<Ticket> pageList = tickets.stream().skip(offset).limit(limit).collect(Collectors.toList());
-            return new PaginationList(tickets.size(), pageList);
+            return new PaginationList<>(tickets.size(), pageList);
         }
         throw new Exception("tickets is null");
     }
@@ -66,7 +66,7 @@ public class TicketService {
         return tickets;
     }
 
-    public PaginationList getTicketPaginationList(int offset, int limit) {
+/*    public PaginationList getTicketPaginationList(int offset, int limit) {
         Iterable<Ticket> allItr = ticketRepo.findAll();
         List<Ticket> tickets = new ArrayList<>();
         for (Ticket ticket : allItr) {
@@ -74,7 +74,7 @@ public class TicketService {
         }
         List<Ticket> pageList = tickets.stream().skip(offset).limit(limit).collect(Collectors.toList());
         return new PaginationList(tickets.size(), pageList);
-    }
+    }*/
 
     public void addATicket(Ticket ticket) {
         ticketRepo.save(ticket);
@@ -147,7 +147,7 @@ public class TicketService {
                     if (exclude.equals(field.getName())) {
                         excludeList.add(field);
                     }
-                    continue;
+                    break;
                 }
             }
         }

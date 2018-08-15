@@ -8,7 +8,7 @@ public class PaginationList<T> {
 
     private List<T> rows;
 
-    public PaginationList(int total, List rows) {
+    public PaginationList(int total, List<T> rows) {
         this.total = total;
         this.rows = rows;
     }
@@ -21,11 +21,11 @@ public class PaginationList<T> {
         this.total = total;
     }
 
-    public List getRows() {
+    public List<T> getRows() {
         return rows;
     }
 
-    public void setRows(List rows) {
+    public void setRows(List<T> rows) {
         this.rows = rows;
     }
 }

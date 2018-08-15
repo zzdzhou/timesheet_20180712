@@ -1,6 +1,5 @@
 package jack.timesheet.timesheet_20180712.web.controller;
 
-import jack.timesheet.timesheet_20180712.dao.UserRepo;
 import jack.timesheet.timesheet_20180712.entities.Ticket;
 import jack.timesheet.timesheet_20180712.entities.User;
 import jack.timesheet.timesheet_20180712.service.TicketService;
@@ -13,10 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -64,7 +61,7 @@ public class TicketController {
     @PostMapping("/add/secure")
     public String addATicket(Ticket ticket, Model model, HttpSession session) throws Exception {
         // todo
-        ticket.setDate(new Date(new java.util.Date().getTime()));
+        ticket.setDate(LocalDate.now());
         Integer userId = (Integer) session.getAttribute("userId");
         Optional<User> userOpt = userService.getUserById(userId);
         if (userOpt.isPresent()) {

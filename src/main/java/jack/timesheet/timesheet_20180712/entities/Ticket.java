@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity(name = "Ticket")
 @Table(name = "ticket")
@@ -14,7 +15,7 @@ public class Ticket {
 //    @JsonBackReference
     private Integer id;
 
-    private Date date;
+    private LocalDate date;
 
     private String activity;
 
@@ -42,11 +43,11 @@ public class Ticket {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
