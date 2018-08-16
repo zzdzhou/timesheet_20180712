@@ -3,12 +3,12 @@ package jack.timesheet.timesheet_20180712.dao;
 import jack.timesheet.timesheet_20180712.dao.custom.TicketRepositoryCustom;
 import jack.timesheet.timesheet_20180712.entities.Ticket;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface TicketRepository extends CrudRepository<Ticket, Integer>, TicketRepositoryCustom {
+public interface TicketRepository extends Repository<Ticket, Integer>, TicketRepositoryCustom {
 
     Ticket save(Ticket ticket);
 

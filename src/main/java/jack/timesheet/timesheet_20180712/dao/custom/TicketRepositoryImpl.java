@@ -1,10 +1,9 @@
 package jack.timesheet.timesheet_20180712.dao.custom;
 
 import jack.timesheet.timesheet_20180712.entities.Ticket;
-import org.springframework.data.repository.core.support.RepositoryFactorySupport;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -15,12 +14,11 @@ import java.util.List;
 
 public class TicketRepositoryImpl implements TicketRepositoryCustom {
 
-    @PersistenceContext
+    @Autowired
     private EntityManager entityManager;
 
     public void setEntityManager(EntityManager entityManager) {
         this.entityManager = entityManager;
-        RepositoryFactorySupport
     }
 
     @Override
