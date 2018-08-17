@@ -4,6 +4,7 @@ import jack.timesheet.timesheet_20180712.dao.custom.TicketRepositoryCustom;
 import jack.timesheet.timesheet_20180712.entities.Ticket;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;

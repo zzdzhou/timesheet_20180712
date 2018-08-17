@@ -2,6 +2,8 @@ package jack.timesheet.timesheet_20180712.dao.custom;
 
 import jack.timesheet.timesheet_20180712.entities.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -23,7 +25,7 @@ public class TicketRepositoryImpl implements TicketRepositoryCustom {
 
     @Override
     public List<Ticket> getTickets(String fullName, String dateRange) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+       /* CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Ticket> criteria = builder.createQuery(Ticket.class);
 
         Root<Ticket> root = criteria.from(Ticket.class);
@@ -43,7 +45,8 @@ public class TicketRepositoryImpl implements TicketRepositoryCustom {
         }
         criteria.where(builder.and(predicates));
         List<Ticket> tickets = entityManager.createQuery(criteria).getResultList();
-        return tickets;
+        return tickets;*/
+       return null;
     }
 
 }
