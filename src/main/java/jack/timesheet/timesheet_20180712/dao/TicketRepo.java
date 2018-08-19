@@ -1,15 +1,14 @@
 package jack.timesheet.timesheet_20180712.dao;
 
-import jack.timesheet.timesheet_20180712.dao.custom.TicketRepositoryCustom;
+import jack.timesheet.timesheet_20180712.dao.custom.TicketRepoCustom;
 import jack.timesheet.timesheet_20180712.entities.Ticket;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface TicketRepository extends Repository<Ticket, Integer>, TicketRepositoryCustom {
+public interface TicketRepo extends Repository<Ticket, Integer>, TicketRepoCustom {
 
     Ticket save(Ticket ticket);
 

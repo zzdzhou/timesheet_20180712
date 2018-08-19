@@ -1,6 +1,6 @@
 package jack.timesheet.timesheet_20180712.service;
 
-import jack.timesheet.timesheet_20180712.dao.TicketRepository;
+import jack.timesheet.timesheet_20180712.dao.TicketRepo;
 import jack.timesheet.timesheet_20180712.dao.UserRepo;
 import jack.timesheet.timesheet_20180712.entities.Ticket;
 import jack.timesheet.timesheet_20180712.entities.User;
@@ -24,13 +24,13 @@ import java.util.stream.Collectors;
 @Service
 public class TicketService {
 
-    public static final String FILENAME_PATTERN = "C:\\Users\\D1M\\Desktop\\zzd_tools\\TS Richemont_%1$s_%2$s.xlsx";
+    private static final String FILENAME_PATTERN = "C:\\Users\\D1M\\Desktop\\zzd_tools\\TS Richemont_%1$s_%2$s.xlsx";
 
-    private TicketRepository ticketRepo;
+    private TicketRepo ticketRepo;
     private UserRepo userRepo;
 
     @Autowired
-    public TicketService(TicketRepository ticketRepo, UserRepo userRepo) {
+    public TicketService(TicketRepo ticketRepo, UserRepo userRepo) {
         this.ticketRepo = ticketRepo;
         this.userRepo = userRepo;
     }
@@ -43,7 +43,7 @@ public class TicketService {
         return null;
     }
 */
-    public List<Ticket> getTickets(String fullName, String dateRange) throws Exception {
+    public List<Ticket> getTickets(String fullName, String dateRange) {
         return ticketRepo.getTickets(fullName, dateRange);
     }
 
@@ -111,7 +111,7 @@ public class TicketService {
         ticketRepo.deleteById(ticketId);
     }
 
-    public void exportTikets(String fullname, int year, int month) throws IOException {
+    /*public void exportTickets(String fullname, int year, int month) throws IOException {
         Iterable<Ticket> all = ticketRepo.findAll();
         List<Ticket> tickets = new ArrayList<>();
         for (Ticket item : all) {
@@ -123,7 +123,7 @@ public class TicketService {
         String[] excludeFields = {"id", "user"};
 
         exportExcel(tickets, filename, excludeFields);
-    }
+    }*/
 
     public List<String> getAllResources() {
         return ticketRepo.findResouceDistinct();
@@ -135,6 +135,13 @@ public class TicketService {
      */
 
 
+    /**
+     * to use
+     * @param tickets
+     * @param filename
+     * @param excludeFields
+     * @throws IOException
+     */
     private void exportExcel (List<Ticket> tickets, String filename, String[] excludeFields) throws IOException {
 
         List<Field> fields = new ArrayList<>(Arrays.asList(Ticket.class.getDeclaredFields()));
@@ -146,8 +153,8 @@ public class TicketService {
                 for (String exclude : excludeFields) {
                     if (exclude.equals(field.getName())) {
                         excludeList.add(field);
+                        break;
                     }
-                    break;
                 }
             }
         }
@@ -158,10 +165,10 @@ public class TicketService {
             try (OutputStream os = new FileOutputStream(filename)) {
                 XSSFSheet sheet1 = wb.createSheet("sheet1");
                 // todo
-                Row row = null;
-                Cell cell = null;
-                Field field = null;
-                Ticket ticket = null;
+                Row row;
+                Cell cell;
+                Field field;
+                Ticket ticket;
                 // transfer each ticket in tickets to one row in excel
                 for (int r = 0; r < tickets.size(); r++) {
                     row = sheet1.createRow(r);

@@ -5,7 +5,7 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
 
-public interface TicketRepositoryCustom {
+public interface TicketRepoCustom {
 
     List<Ticket> getTickets(String fullName, String dateRange);
 

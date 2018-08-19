@@ -1,6 +1,7 @@
 package jack.timesheet.timesheet_20180712.Service;
 
 import jack.timesheet.timesheet_20180712.Timesheet20180712Application;
+import jack.timesheet.timesheet_20180712.entities.Ticket;
 import jack.timesheet.timesheet_20180712.service.TicketService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.IOException;
+import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = Timesheet20180712Application.class) // 加载ApplicationContext @SpringBootTest或@SpringApplicationConfiguration(1.4.0过期)
@@ -23,6 +25,16 @@ public class TicketServiceTest {
     public void exportExcel() throws IOException {
         // initial parameters
 //        ticketService.exportTikets("Rookie HAN");
+    }
+
+    @Test
+    public void getTickets() {
+        String resource = "Jack ZHOU";
+        String dateRange = "2018.07.12 - 2018.08.01";
+        List<Ticket> tickets = ticketService.getTickets(resource, dateRange);
+        for (Ticket item : tickets) {
+            System.out.println(item);
+        }
     }
 
 }

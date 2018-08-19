@@ -98,4 +98,10 @@ public class Ticket {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return String.format("{id: %s, date: %s, days: %f, resource: %s, activity: %s, description: %s}", this.id,
+                this.date, this.days, this.resource, this.activity, this.description);
+    }
 }
