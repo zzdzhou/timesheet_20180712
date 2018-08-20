@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Service
 public class TicketService {
 
-    private static final String FILENAME_PATTERN = "C:\\Users\\D1M\\Desktop\\zzd_tools\\TS Richemont_%1$s_%2$s.xlsx";
+    public static final String FILENAME_PATTERN = "C:\\Users\\D1M\\Desktop\\zzd_tools\\TS Richemont_%1$s_%2$s.xlsx";
 
     private TicketRepo ticketRepo;
     private UserRepo userRepo;
@@ -35,27 +35,17 @@ public class TicketService {
         this.userRepo = userRepo;
     }
 
- /*   public List<Ticket> getTickets(int userId) {
-        Optional<List<Ticket>> ticketsOpt = userRepo.findById(userId).map(User::getTickets);
-        if (ticketsOpt.isPresent()) {
-            return ticketsOpt.get();
-        }
-        return null;
-    }
-*/
     public List<Ticket> getTickets(String fullName, String dateRange) {
         return ticketRepo.getTickets(fullName, dateRange);
     }
 
-    public PaginationList convertTicketsToPaginationList(List<Ticket> tickets, int offset, int limit) throws Exception {
+    public PaginationList convertTicketsToPaginationList(List<Ticket> tickets, int offset, int pageSize) throws Exception {
         if (tickets != null) {
-            List<Ticket> pageList = tickets.stream().skip(offset).limit(limit).collect(Collectors.toList());
+            List<Ticket> pageList = tickets.stream().skip(offset).limit(pageSize).collect(Collectors.toList());
             return new PaginationList<>(tickets.size(), pageList);
         }
         throw new Exception("tickets is null");
     }
-
-
 
     public List<Ticket> getAllTickets() {
         Iterable<Ticket> allItr = ticketRepo.findAll();
@@ -65,16 +55,6 @@ public class TicketService {
         }
         return tickets;
     }
-
-/*    public PaginationList getTicketPaginationList(int offset, int limit) {
-        Iterable<Ticket> allItr = ticketRepo.findAll();
-        List<Ticket> tickets = new ArrayList<>();
-        for (Ticket ticket : allItr) {
-            tickets.add(ticket);
-        }
-        List<Ticket> pageList = tickets.stream().skip(offset).limit(limit).collect(Collectors.toList());
-        return new PaginationList(tickets.size(), pageList);
-    }*/
 
     public void addATicket(Ticket ticket) {
         ticketRepo.save(ticket);
@@ -111,20 +91,6 @@ public class TicketService {
         ticketRepo.deleteById(ticketId);
     }
 
-    /*public void exportTickets(String fullname, int year, int month) throws IOException {
-        Iterable<Ticket> all = ticketRepo.findAll();
-        List<Ticket> tickets = new ArrayList<>();
-        for (Ticket item : all) {
-            tickets.add(item);
-        }
-
-        fullname = fullname.replace(" ", "_");
-        String filename = String.format(FILENAME_PATTERN, fullname, LocalDate.now().format(DateTimeFormatter.ofPattern("uuuu_MM")));
-        String[] excludeFields = {"id", "user"};
-
-        exportExcel(tickets, filename, excludeFields);
-    }*/
-
     public List<String> getAllResources() {
         return ticketRepo.findResouceDistinct();
     }
@@ -142,7 +108,7 @@ public class TicketService {
      * @param excludeFields
      * @throws IOException
      */
-    private void exportExcel (List<Ticket> tickets, String filename, String[] excludeFields) throws IOException {
+    public void exportExcel (List<Ticket> tickets, String filename, String[] excludeFields) throws IOException {
 
         List<Field> fields = new ArrayList<>(Arrays.asList(Ticket.class.getDeclaredFields()));
 

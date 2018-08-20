@@ -173,13 +173,37 @@
     var $modal = $('#tiket-modal');
 
     $(function () {
+        /*
+         * daterangepicker, place daterangepicker before bootstrapTable
+         */
+        var start = /*[[${startDate}]]*/ "2018.01.01";
+        var end = /*[[${endDate}]]*/ "2019.01.01";
+
+        $("#date-range").daterangepicker({
+            singleDatePicker: false,
+            startDate: start,
+            endDate: end,
+            minDate: "2018.01.01",
+            showDropDowns: true,
+            locale: {
+                format: "YYYY.MM.DD"
+            }
+        });
+
+        /*
+         * bootstrapTable
+         */
         $table.bootstrapTable({
             url: "/timesheet/rest/ticket",
             method: "get",
             dataType: "json",
-            queryParams: {
-                fullName: $("#fullName").text(),
-                dateRange: $("#date-range").val()
+            queryParams: function(params) {
+                return {
+                    fullName: $("#fullName").val(),
+                    dateRange: $("#date-range").val(),
+                    pageSize: params.limit,
+                    offset: params.offset
+                };
             },
 
             pagination: true,
@@ -201,6 +225,21 @@
             $modal.modal('hide');
         })
 
+        $('#export').click(function () {
+            $.ajax({
+                url: "/timesheet/rest/ticket/export",
+                type: "GET",
+//                contentType: "application/json",
+                data: {
+                    fullName: $("#fullName").val(),
+                    dateRange: $("#date-range").val()
+                }/*,
+                dataType: "text"*/
+
+            });
+
+        });
+
         $modal.find('#submit').click(function () {
             var row = {};
             row.id = $modal.data('id');
@@ -213,18 +252,8 @@
             createOrUpdateTicket(row);
         });
 
-        var start = /*[[${startDate}]]*/ "2018.01.01";
-        var end = /*[[${endDate}]]*/ "2019.01.01";
-        $("#date-range").daterangepicker({
-            singleDatePicker: false,
-            startDate: start,
-            endDate: end,
-            minDate: "2018.01.01",
-            showDropDowns: true,
-            locale: {
-                format: "YYYY.MM.DD"
-            }
-        });
+
+
     });
 
     function operateFormatter() {
