@@ -36,7 +36,6 @@ public class RestTicketController {
                                                        @RequestParam(required = false) String dateRange,
                                                        @RequestParam(required = false, defaultValue = "0") int offset,
                                                        @RequestParam int pageSize) throws Exception {
-
         List<Ticket> tickets = ticketService.getTickets(fullName, dateRange);
         PaginationList paginationList = ticketService.convertTicketsToPaginationList(tickets, offset, pageSize);
         HttpHeaders responseHeaders = new HttpHeaders();

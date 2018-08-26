@@ -16,7 +16,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -24,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 public class TicketService {
 
-    public static final String FILENAME_PATTERN = "C:\\Users\\D1M\\Desktop\\zzd_tools\\TS Richemont_%1$s_%2$s.xlsx";
+    public static final String FILENAME_PATTERN = "\\root\\jack\\webapp\\temp\\timesheet\\TS Richemont_%1$s_%2$s.xlsx";
 
     private TicketRepo ticketRepo;
     private UserRepo userRepo;
@@ -108,7 +110,7 @@ public class TicketService {
      * @param excludeFields
      * @throws IOException
      */
-    public void exportExcel (List<Ticket> tickets, String filename, String[] excludeFields) throws IOException {
+    public void exportExcel(List<Ticket> tickets, String filename, String[] excludeFields) throws IOException {
 
         List<Field> fields = new ArrayList<>(Arrays.asList(Ticket.class.getDeclaredFields()));
 
@@ -134,11 +136,13 @@ public class TicketService {
                 Row row;
                 Cell cell;
                 Field field;
-                Ticket ticket;
+                Ticket ticket = null;
                 // transfer each ticket in tickets to one row in excel
-                for (int r = 0; r < tickets.size(); r++) {
+                for (int r = 0; r <= tickets.size(); r++) {
                     row = sheet1.createRow(r);
-                    ticket = tickets.get(r);
+                    if (r > 0) {
+                        ticket = tickets.get(r-1);
+                    }
                     // tansfer each field in a ticket to a cell in excel
                     for (int c = 0; c < fields.size(); c++) {
                         cell = row.createCell(c);
@@ -158,6 +162,10 @@ public class TicketService {
                                 Calendar cale = Calendar.getInstance();
                                 cale.setTime((java.sql.Date) field.get(ticket));
                                 cell.setCellValue(cale);
+                            } else if (type == LocalDate.class) {
+                                LocalDate localDate = (LocalDate) field.get(ticket);
+                                Instant instant = localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant();
+                                cell.setCellValue(Date.from(instant));
                             }
                         }
                     }

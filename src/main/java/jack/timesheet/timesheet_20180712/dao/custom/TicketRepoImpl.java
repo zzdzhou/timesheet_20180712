@@ -37,6 +37,7 @@ public class TicketRepoImpl implements TicketRepoCustom {
             predicates.add(builder.between(root.get(Ticket_.date), startDate, endDate));
         }
         criteria.where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
+        criteria.orderBy(builder.asc(root.get(Ticket_.date)));
         return em.createQuery(criteria).getResultList();
     }
 

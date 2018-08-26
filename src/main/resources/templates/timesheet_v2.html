@@ -27,10 +27,6 @@
             <li class="nav-item">
                 <a class="nav-link active" href="">Timesheet</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="">Export</a>
-            </li>
-
         </ul>
         <button class="btn btn-secondary">Login</button>
         <!--<p class="navbar-text">Loign</p>-->
@@ -155,6 +151,12 @@
 
 </div>
 
+<form id="export-form" method="get" action="/timesheet/rest/ticket/export" target="" style="display: none">
+    <input name="fullName">
+    <input name="dateRange">
+</form>
+
+
 <!-- jQuery -->
 <script src="/timesheet/node_modules/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap js -->
@@ -184,6 +186,7 @@
             startDate: start,
             endDate: end,
             minDate: "2018.01.01",
+            linkedCalendars: false,
             showDropDowns: true,
             locale: {
                 format: "YYYY.MM.DD"
@@ -205,7 +208,6 @@
                     offset: params.offset
                 };
             },
-
             pagination: true,
             sidePagination: "server",
             pageNumber: 1,
@@ -226,18 +228,9 @@
         })
 
         $('#export').click(function () {
-            $.ajax({
-                url: "/timesheet/rest/ticket/export",
-                type: "GET",
-//                contentType: "application/json",
-                data: {
-                    fullName: $("#fullName").val(),
-                    dateRange: $("#date-range").val()
-                }/*,
-                dataType: "text"*/
-
-            });
-
+            $("form#export-form [name='fullName']").val($('#fullName').val());
+            $("form#export-form [name='dateRange']").val($('#date-range').val());
+            $('#export-form').submit();
         });
 
         $modal.find('#submit').click(function () {
@@ -303,7 +296,7 @@
             "days": '',
             "description": ''
         };
-        defautRow.resource = /*[[${fullname}]]*/'Your full name';
+        defautRow.resource = /*[[${fullName}]]*/'Your full name';
         row = row || defautRow;
         $modal.find('.modal-title').text(title);
         $modal.data("id", row.id);
