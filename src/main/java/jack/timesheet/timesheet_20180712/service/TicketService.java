@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Service
 public class TicketService {
 
-    public static final String FILENAME_PATTERN = "\\root\\jack\\webapp\\temp\\timesheet\\TS Richemont_%1$s_%2$s.xlsx";
+    public static final String FILENAME_PATTERN = "/root/jack/webapp/temp/timesheet/TS Richemont_%1$s_%2$s.xlsx";
 
     private TicketRepo ticketRepo;
     private UserRepo userRepo;
