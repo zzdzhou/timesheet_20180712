@@ -10,6 +10,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.FileOutputStream;
@@ -26,7 +27,8 @@ import java.util.stream.Collectors;
 @Service
 public class TicketService {
 
-    public static final String FILENAME_PATTERN = "/root/jack/webapp/temp/timesheet/TS Richemont_%1$s_%2$s.xlsx";
+    @Value("${timesheet.export.filepath.pattern}")
+    private String FILENAME_PATTERN;
 
     private TicketRepo ticketRepo;
     private UserRepo userRepo;
