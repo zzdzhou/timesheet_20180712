@@ -27,9 +27,6 @@ import java.util.stream.Collectors;
 @Service
 public class TicketService {
 
-    @Value("${timesheet.export.filepath.pattern}")
-    private String FILENAME_PATTERN;
-
     private TicketRepo ticketRepo;
     private UserRepo userRepo;
 

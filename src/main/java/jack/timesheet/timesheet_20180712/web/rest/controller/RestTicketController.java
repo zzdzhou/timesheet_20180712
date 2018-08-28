@@ -5,6 +5,7 @@ import jack.timesheet.timesheet_20180712.service.TicketService;
 import jack.timesheet.timesheet_20180712.util.PaginationList;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/rest/ticket")
 public class RestTicketController {
+    @Value("${timesheet.export.filepath.pattern}")
+    public String FILENAME_PATTERN;
 
     private TicketService ticketService;
 
@@ -59,7 +62,7 @@ public class RestTicketController {
                                       @RequestParam(required = false) String dateRange) throws Exception {
         List<Ticket> tickets = ticketService.getTickets(fullName, dateRange);
         if (tickets != null && tickets.size() > 0) {
-            String filename = String.format(TicketService.FILENAME_PATTERN, fullName, dateRange);
+            String filename = String.format(FILENAME_PATTERN, fullName, dateRange);
             String excludedFields[] = {"id", "user"};
             ticketService.exportExcel(tickets, filename, excludedFields);
             File file = new File(filename);
